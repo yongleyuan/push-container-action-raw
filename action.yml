@@ -10,3 +10,22 @@ inputs:
     description: 'List of tags that gets passed along to the docker build args'
     required: true
     default: '' # set to an empty string
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+
+  - name: Generate tag list
+    id: generate-tag-list
+    env:
+      REPO: ${{ inputs.repo }}
+    run: |
+      docker_repo=${GITHUB_REPOSITORY/opensciencegrid\/docker-/opensciencegrid/}
+      if [ -z "${{ inputs.tag_list }}" ]; then
+        tag_list=$docker_repo:$REPO,$docker_repo:$(date +%Y%m%d-%H%M)
+      else
+        tag_list=${{ inputs.tag_list }}
+      fi
+      echo "::set-output name=taglist::$tag_list"
+    shell: bash
