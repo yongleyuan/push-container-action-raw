@@ -10,6 +10,12 @@ inputs:
     description: 'List of tags that gets passed along to the docker build args'
     required: true
     default: '' # set to an empty string
+  docker_username:
+    description: 'Docker username obtained from secrets'
+    required: true
+  docker_password:
+    description: 'Docker password obtained from secrets'
+    required: true
 
 runs:
   using: "composite"
