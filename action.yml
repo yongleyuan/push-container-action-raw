@@ -50,5 +50,5 @@ runs:
     with:
       push: true
       build-args: BASE_YUM_REPO=${{ inputs.repo }}
-      tags: ${{ inputs.tag_list }}
+      tags: "${{ steps.generate-tag-list.outputs.taglist }}"
       cache-from: type=local,src=/tmp/.buildx-cache
